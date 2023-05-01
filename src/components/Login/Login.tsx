@@ -3,6 +3,7 @@ import React, {useContext} from 'react';
 import {AuthContext} from "../../context/AuthStateContext";
 
 export const Login = () => {
+
     const {handleLoginWithGoogle, handleLoginWithCredentials} = useContext(AuthContext)
 
     const {handleChange, pass, email} = useForm({
@@ -48,6 +49,7 @@ export const Login = () => {
                                         onClick={handleLoginWithGoogle}> Google
                                 </button>
                             </div>
+
                         </div>
                     </form>
                 </div>

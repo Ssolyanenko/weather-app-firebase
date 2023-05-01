@@ -1,8 +1,10 @@
 import {AuthContext} from "../../context/AuthStateContext";
-import React, {useContext} from "react";
+import {useContext} from "react";
 import {useForm} from "../../helpers/useForm";
 
+
 export const Register = () => {
+
     const {handleRegisterWithCredentials} = useContext(AuthContext)
 
     const {handleChange, pass, email} = useForm({

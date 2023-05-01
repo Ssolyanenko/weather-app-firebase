@@ -7,7 +7,9 @@ import {Route, Routes} from "react-router";
 import {Details} from "./components/Details/Details";
 
 const App = () => {
+
     const {status, userId} = useContext(AuthContext)
+
 
     if (status === 'checking') return <p className="loading"><span>Checking credentials, wait a moment...</span></p>
 
@@ -20,8 +22,9 @@ const App = () => {
                     ? <Route path="/" element={<HomePage/>}></Route>
                     : <Route path="/" element={<AuthPage/>}></Route>
             }
-                <Route path ="/details/" element={<Details/>}></Route>
+                <Route path ="/details" element={<Details/>}></Route>
                 </Routes>
+
         </main>
     )
 }
