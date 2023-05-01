@@ -7,10 +7,10 @@ import {ActionText} from "../../constants/text";
 import {Link, NavLink} from "react-router-dom";
 import {Details} from "../Details/Details";
 import {useNavigate} from "react-router";
-import {updateCity} from "../../store/action";
+import {getCity, updateCity} from "../../store/action";
 
 
-export const Widget = ({ city,id }) => {
+export const Widget = ({city, id}) => {
     const dispatch = useTypedDispatch()
     const handleRemove = ({id, name}) => {
         dispatch({
@@ -22,13 +22,11 @@ export const Widget = ({ city,id }) => {
     const navigate = useNavigate();
 
     const handleClick = () => {
-
-        navigate("/details", { state: { city } });
+        navigate("/details", {state: {city}});
     };
-    function refreshCity() {
 
-       updateCity(city)
-        toast.info(`${city.name} was updated!`, {autoClose: 1000})
+    function refreshCity({name}) {
+        dispatch(getCity(name, ActionText.UPDATE_CITY))
     }
 
     return (
@@ -42,7 +40,7 @@ export const Widget = ({ city,id }) => {
                     </button>
 
                     <button className="refresh-button btn btn-warning rounded-circle p-2 tt" onClick={() => {
-                        refreshCity(id)
+                        refreshCity(city)
                     }}><span
                         className="tttext bg-dark">Refresh widget</span>
                     </button>
@@ -57,7 +55,7 @@ export const Widget = ({ city,id }) => {
                     <div className="pt-3">
                         <p className="card-text display-6 mb-3">{city.main.temp}°C</p>
                     </div>
-                    <button  type="button" className="btn btn-dark mt-3" onClick={handleClick}>See Details</button>
+                    <button type="button" className="btn btn-dark mt-3" onClick={handleClick}>See Details</button>
                 </div>
             </div>
         </div>

@@ -1,5 +1,11 @@
-import { createContext, useEffect, useState } from 'react'
-import { loginWithCredentials, logoutFirebase, onAuthStateHasChanged, signInWithCredentials, singInWithGoogle } from '../firebase/providers'
+import {createContext, useEffect, useState} from 'react'
+import {
+    loginWithCredentials,
+    logoutFirebase,
+    onAuthStateHasChanged,
+    signInWithCredentials,
+    singInWithGoogle
+} from '../firebase/providers'
 
 export interface AuthStateContext {
     userId: string | null
@@ -17,9 +23,11 @@ const initialState: Pick<AuthStateContext, 'status' | 'userId'> = {
 
 export const AuthContext = createContext({} as AuthStateContext)
 
-interface IElement { children: JSX.Element | JSX.Element[] }
+interface IElement {
+    children: JSX.Element | JSX.Element[]
+}
 
-export const AuthProvider = ({ children }: IElement) => {
+export const AuthProvider = ({children}: IElement) => {
 
     const [session, setSession] = useState(initialState)
 
@@ -30,15 +38,15 @@ export const AuthProvider = ({ children }: IElement) => {
 
     const handleLogOut = async () => {
         logoutFirebase()
-        setSession({ userId: null, status: 'no-authenticated' })
+        setSession({userId: null, status: 'no-authenticated'})
     }
 
     const validateAuth = (userId: string | undefined) => {
-        if (userId) return setSession({ userId, status: 'authenticated' })
+        if (userId) return setSession({userId, status: 'authenticated'})
         handleLogOut()
     }
 
-    const checking = () => setSession(prev => ({ ...prev, status: 'checking' }))
+    const checking = () => setSession(prev => ({...prev, status: 'checking'}))
 
     const handleLoginWithGoogle = async () => {
         checking()
@@ -48,13 +56,13 @@ export const AuthProvider = ({ children }: IElement) => {
 
     const handleLoginWithCredentials = async (password: string, email: string) => {
         checking()
-        const userId = await loginWithCredentials({ email, password })
+        const userId = await loginWithCredentials({email, password})
         validateAuth(userId)
     }
 
     const handleRegisterWithCredentials = async (password: string, email: string) => {
         checking()
-        const userId = await signInWithCredentials({ email, password })
+        const userId = await signInWithCredentials({email, password})
         validateAuth(userId)
     }
 

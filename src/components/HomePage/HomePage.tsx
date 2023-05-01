@@ -1,12 +1,13 @@
 import {useTypedDispatch} from "../../helpers/useTypedDispatch";
 import {useSelector} from "react-redux";
-import {addCity} from "../../store/action";
+import {getCity} from "../../store/action";
 import {useContext, useEffect} from "react";
 import {Slide, ToastContainer} from "react-toastify";
-import {Heading} from "../Heading";
+import {Heading} from "../Heading/Heading";
 import {Widgets} from "../widgets/Widgets";
-import {Form} from "../Form";
+import {Form} from "../Form/Form";
 import {AuthContext} from "../../context/AuthStateContext";
+import {ActionText} from "../../constants/text";
 
 export const HomePage = () => {
     const {handleLogOut} = useContext(AuthContext)
@@ -14,7 +15,7 @@ export const HomePage = () => {
     const cities = useSelector(state => state.cities);
 
     const handleAddCity = (cityName: string) => {
-        dispatch(addCity(cityName));
+        dispatch(getCity(cityName,ActionText.ADD_CITY));
     };
 
     useEffect(() => {

@@ -2,7 +2,7 @@ import {
     createUserWithEmailAndPassword, GoogleAuthProvider,
     onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup
 } from 'firebase/auth'
-import { FirebaseAuth } from './config'
+import {FirebaseAuth} from './config'
 import React from "react";
 import {AuthStateContext} from "../context/AuthStateContext";
 
@@ -12,7 +12,7 @@ export const singInWithGoogle = async () => {
     try {
         const result = await signInWithPopup(FirebaseAuth, googleProvider)
 
-        const { displayName, email, photoURL, uid } = result.user
+        const {uid} = result.user
 
         return uid
 
@@ -27,7 +27,7 @@ interface PropsRegister {
     password: string
 }
 
-export const signInWithCredentials = async ({ email, password }: PropsRegister) => {
+export const signInWithCredentials = async ({email, password}: PropsRegister) => {
 
     try {
         const resp = await createUserWithEmailAndPassword(FirebaseAuth, email, password);
@@ -40,7 +40,7 @@ export const signInWithCredentials = async ({ email, password }: PropsRegister) 
 
 }
 
-export const loginWithCredentials = async ({ email, password }: PropsRegister) => {
+export const loginWithCredentials = async ({email, password}: PropsRegister) => {
 
     try {
         const resp = await signInWithEmailAndPassword(FirebaseAuth, email, password);
@@ -59,9 +59,9 @@ type StateDispatch = React.Dispatch<React.SetStateAction<Pick<AuthStateContext, 
 export const onAuthStateHasChanged = (setSession: StateDispatch) => {
     onAuthStateChanged(FirebaseAuth, user => {
 
-        if (!user) return setSession({ status: 'no-authenticated', userId: null })
+        if (!user) return setSession({status: 'no-authenticated', userId: null})
 
-        setSession({ status: 'authenticated', userId: user!.uid })
+        setSession({status: 'authenticated', userId: user!.uid})
     })
 }
 

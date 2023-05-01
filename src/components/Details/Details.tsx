@@ -1,24 +1,48 @@
-import React, {useEffect, useState} from "react";
-import {useSelector} from "react-redux";
-import {logoutFirebase} from "../../firebase/providers";
-import {useLocation, useNavigate, useParams} from "react-router";
-import {useTypedDispatch} from "../../helpers/useTypedDispatch";
+import React from "react";
+import {useLocation,} from "react-router";
 
 export const Details = () => {
     const location = useLocation();
-    const data = location.state.city;
-
-
+    const {name, day, time, weather, wind, main} = location.state.city
 
     return (
-        <>
-            <div className id={"collapseExample" + data.index} style={{whiteSpace: "nowrap"}}>
-                <p className="card-text">Feels like: {data.main.feels_like}°C</p>
-                <p className="card-text">Humidity: {data.main.humidity}%</p>
-                <br/>
-                <p className="card-text">Pressure: {data.main.pressure} hPa</p>
-                <p className="card-text">Wind: {data.wind.speed} km/h - {data.wind.deg}°</p>
-            </div>
-        </>
+        <table className="table table-bordered table-striped">
+            <thead>
+            <tr>
+                <th>Location</th>
+                <th>Date & Time</th>
+                <th>Temperature</th>
+                <th>Feels Like</th>
+                <th>Humidity</th>
+                <th>Pressure</th>
+                <th>Wind Speed</th>
+                <th>Wind Direction</th>
+                <th>Weather Icon</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>{name}</td>
+                <td>{day} {time}</td>
+                <td>{main.temp}°C</td>
+                <td>{main.feels_like}°C</td>
+                <td>{main.humidity}%</td>
+                <td>{main.pressure} hPa</td>
+                <td>{wind.speed} km/h</td>
+                <td>{wind.deg}°</td>
+                <td>
+                    <img
+                        className="weather-icon"
+                        src={
+                            "http://openweathermap.org/img/wn/" +
+                            weather[0].icon +
+                            "@2x.png"
+                        }
+                        alt="weather icon"
+                    />
+                </td>
+            </tr>
+            </tbody>
+        </table>
     )
 }
